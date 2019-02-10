@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body ng-app="PetQuest" ng-controller="indexController">
+    <div class="wrapper">
+    <div class="overall-header">
+        <div class="navbar.transparent.navbar-inverse navbar-gradient">
+            <div class="navbar-inner">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="color:white;">
+
+                        MENU
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/#/home">Home</a></li>
+                    </ul>
+                    <!--Html.Partial("_LoginPartial")-->
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li data-ng-hide="!authentication.isAuth"><a>Welcome {{authentication.userName}}</a></li>
+                        <li data-ng-hide="!authentication.isAuth"><a href="#/pets">Pet Finder</a></li>
+                        <li data-ng-hide="!authentication.isAuth"><a href="#/report_found">Report Missing Pets</a></li>
+                        <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+                        <li data-ng-hide="authentication.isAuth"> <a href="#loginmodal" id="modaltrigger">Login</a></li>
+                        <li data-ng-hide="authentication.isAuth"><a href="#registermodal" id="modaltrigger2">Register</a></li>
+                        </ul>
+</div>
+            </div>
+        </div>
+        <div id="logo"><img src="/Content/petquest.png" /><br /> The Pet Lost and Found System.</div>
+    </div>
+    <div class="container body-content">
+
+        <div id="loginmodal" style="display:none;">
+            <h1>Login</h1>
+            <form id="loginform" name="loginform" method="post" action="index.html" ng-controller="loginController">
+                <label for="username">Username:</label>
+                <input type="text" name="nameLogin" id="username" class="txtfield" tabindex="1" data-ng-model="loginData.username">
+
+                <label for="password">Password:</label>
+                <input type="password" name="passwordLogin" id="password" class="txtfield" tabindex="2" data-ng-model="loginData.password">
+
+                <div class="center"><input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3" data-ng-click="login();$event.preventDefault();"></div>
+                <div data-ng-hide="message == ''" class="alert alert-danger">
+                    {{message}}
+                </div>
+             </form>
+        </div>
+        <div id="registermodal" style="display:none;" ng-controller="registerController">
+            <h1>register</h1>
+            <form id="registerform" name="registerform" method="post" action="index.html">
+                <label for="username">Username:</label>
+                <input type="text" name="nameRegister" id="username" class="txtfield" tabindex="1" data-ng-model="registration.Name">
+                <label for="email">Email:</label>
+                <input type="text" name="emailRegister" id="email" class="txtfield" tabindex="1" data-ng-model="registration.Email">
+                <label for="password">Password:</label>
+                <input type="password" name="passwordRegister" id="password" class="txtfield" tabindex="2" data-ng-model="registration.Password">
+
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" name="confirmpasswordRegister" id="comfirm-password" class="txtfield" tabindex="2" data-ng-model="registration.ConfirmPassword">
+
+                <div class="center"><input type="submit" name="regbtn" id="regbtn" class="flatbtn-blu hidemodal" value="Register" tabindex="3" data-ng-click="signUp();$event.preventDefault();"></div>
+                <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-successs' : 'alert alert-danger'" >{{message}}</div>
+            </form>
+        </div>
+        <div data-ng-view="" class="ng-scope">
+            @RenderBody()
+        </div>
+        
+        </div>
+        <footer style="float:left;">
+            <p>&copy; @DateTime.Now.Year - PetQuest Inc.</p>
+        </footer>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery-plugins")
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript" src="Scripts/angular.js"></script>
+    <script type="text/javascript" src="Scripts/angular-route.js"></script>
+    <script type="text/javascript" src="Scripts/angular-local-storage.js"></script>
+    <script type="text/javascript" src="Scripts/angularApp.js" ></script>
+    <script type="text/javascript" src="Scripts/modalSetup.js" ></script>
+
+
+
+
+</body>
+</html>

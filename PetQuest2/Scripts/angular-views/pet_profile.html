@@ -1,0 +1,22 @@
+﻿<h1>Pet</h1>
+<div class="col-md-4"  style ="float:right;" ><img src="{{pet.Image}}" width="200px" height="200px" style="background:#808080;" /></div>
+<div class="col-md-2" style="float:left;">
+   <ul>
+       <li>Name: {{pet.Name}} <input type="text" ng-value="pet.Name" placeholder="{{pet.Name}}" class="form-control" ng-if="editPet == 1" data-ng-model="petUpdate.Name" required /></li>
+       <li>Location: {{pet.Location}}<input type="text" value="{{pet.Location}}" class="form-control" ng-if="editPet == 1" data-ng-model="petUpdate.Location" required /></li>
+       <li>Species: {{pet.Species}} <input type="text" value="{{pet.Species}}" class="form-control" ng-if="editPet == 1" placeholder="{{pet.Species}}" data-ng-model="petUpdate.Species" required /></li>
+       <li>Breed: {{pet.Breed}} <input type="text" value="{{pet.Breed}}" class="form-control" ng-if="editPet == 1" placeholder="{{pet.Breed}}" data-ng-model="petUpdate.Breed" required /></li>
+       <li>Found?: <p ng-if="pet.FoundID == 0">Not Found!</p><p ng-if="pet.FoundID > 0">FOUND</p></li>
+       <li ng-if="pet.FoundID >0">Found Location: {{foundInfo.LocationFound}}</li>
+       <li ng-if="editPet == 1">Image: <input type="file" accept="image/*" class="form-control" fileread="petUpdate.Image" /></li>
+   </ul>
+    <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="updatePet()" ng-if="editPet == 1">Submit</button>
+    <div data-ng-hide="message == ''" class="alert alert-danger" ng-if="editPet == 1">
+        {{message}}
+    </div>
+    <br />
+   <a ng-if="authentication.ID == pet.OwnerID || authentication.isAdmin" ng-click="deletePet(pet.ID)">Delete this pet</a><br />
+    <a ng-if="authentication.ID == pet.OwnerID || authentication.isAdmin" ng-click="edit(1)" ng-if="editPet == 0">Edit this pet</a><br />
+   
+    
+</div>

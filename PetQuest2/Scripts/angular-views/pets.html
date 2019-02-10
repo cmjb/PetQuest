@@ -1,0 +1,100 @@
+﻿<h1>Pet Finder</h1>
+<div class="col-md-6" style="float:left;">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th><a  ng-click="sortType = 'ID'">Pet ID</a></th>
+                <th><a  ng-click="sortType = 'Name'">Name</a></th>
+                <th>Image</th>
+                <th><a ng-click="sortType = 'Species'">Species</a></th>
+                <th><a ng-click="sortType = 'Breed'">Breed</a></th>
+                <th><a ng-click="sortType = 'Location'">Location</a></th>
+                <th><a ng-click="sortType = 'PublishedDate'">Date</a></th>
+                <th><a ng-click="sortType = 'FoundID'">Found?</a></th>
+                <th>Functions</th>
+                
+            </tr>
+        </thead>
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">A</div>
+
+                    <input type="text" class="form-control" placeholder="PetSearch" ng-model="searchPets">
+
+                </div>
+            </div>
+        </form>
+        <a data-ng-click="sortLost()">Sort by Lost</a>
+        <tbody>
+            <tr data-ng-repeat="pet in pets | orderBy:sortType:sortReverse | filter:searchPets  ">
+                <td>
+                    
+                        {{ pet.ID }}
+                </td>
+                <td>
+                    
+                        {{ pet.Name }}
+                </td>
+                <td>
+                    <img src="{{ pet.Image }}" width="100px" height="100px" />
+                </td>
+                <td>
+
+                    {{ pet.Species }}
+                </td>
+                <td>
+
+                    {{ pet.Breed }}
+                </td>
+                <td>
+                   
+                        {{ pet.Location }}
+                </td>
+                <td>
+                    
+                        {{ pet.PublishedDate }}
+                </td>
+                <td>
+                    
+                        <p ng-if="pet.FoundID != 0">Found</p>
+                        <p ng-if="pet.FoundID == 0">Not Found</p>
+
+                </td>
+                <td><a href="#/pet/{{pet.ID}}">Profile</a>  <a ng-if="authentication.ID == pet.OwnerID || authentication.isAdmin" ng-click="deletePet(pet.ID)">| Delete</a>
+                    </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <div id="registermodal" style="display:none;">
+        <h1>Report pet found</h1>
+        <form id="foundpetform" name="foundpetform" method="post">
+            <label for="name">ID:</label>
+            <input type="text" name="name" id="name" class="txtfield" tabindex="1" data-ng-model="foundpet.ID">{{pet.ID}}</input>
+            </form>
+
+</div>
+    <div class="col-md-offset-4" style="text-align:left;float:left">
+        
+        <form role="form">
+            <div class="row">
+
+                <div >
+                    <h2 class="form-pet-heading">Report a lost pet</h2>
+                    <input type="text" class="form-control" placeholder="Pet Name" data-ng-model="petData.Name" required autofocus>
+                    <input type="text" class="form-control" placeholder="Location" data-ng-model="petData.Location" required>
+                    <input type="file" accept="image/*" class="form-control" fileread="petData.Image" />
+                    <input type="text" class="form-control" placeholder="Species" data-ng-model="petData.Species" required>
+                    <input type="text" class="form-control" placeholder="Breed" data-ng-model="petData.Breed" required>
+                    <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="petlost()">Submit</button>
+                    <div data-ng-hide="message == ''" class="alert alert-danger">
+                        {{message}}
+                    </div>
+                </div>
+                
+ 
+            </div>
+        </form>
+    </div>
+</div>
